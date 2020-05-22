@@ -10,12 +10,11 @@ class MinimalSubscriber : public rclcpp::Node
     MinimalSubscriber()
     : Node("cpp_sub_spiral_node")
     {
-      subscriber_ = this->create_subscription<geometry_msgs::msg::Twist>(
-      "turtle1/cmd_vel", 1, std::bind(&MinimalSubscriber::topic_callback, this, _1));
+      subscriber_ = this->create_subscription<geometry_msgs::msg::Twist>("turtle1/cmd_vel", 1, std::bind(&MinimalSubscriber::subscribe_message, this, _1));
     }
 
   private:
-    void topic_callback(const geometry_msgs::msg::Twist::SharedPtr message) const
+    void subscribe_message(const geometry_msgs::msg::Twist::SharedPtr message) const
     {
       RCLCPP_INFO(this->get_logger(), "Recieved - Linear Velocity : '%f', Angular Velocity : '%f'", message->linear.x, message->angular.z);
     }

@@ -6,10 +6,10 @@ class MinimalSubscriber(Node):
 
     def __init__(self):
         super().__init__('py_sub_spiral_node')
-        self.subscription = self.create_subscription(Twist, 'turtle1/cmd_vel', self.listener_callback, 1)
-        self.subscription  # prevent unused variable warning
+        self.subscriber_ = self.create_subscription(Twist, 'turtle1/cmd_vel', self.subscribe_message, 1)
+        self.subscriber_  # prevent unused variable warning
 
-    def listener_callback(self, msg):
+    def subscribe_message(self, msg):
         self.get_logger().info('Recieved - Linear Velocity : %f, Angular Velocity : %f' % (msg.linear.x, msg.angular.z))
 
 def main(args=None):

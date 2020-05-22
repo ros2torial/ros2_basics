@@ -1,22 +1,37 @@
+#include <memory>
+#include <math.h>
 #include "rclcpp/rclcpp.hpp"
 #include "turtlesim/srv/spawn.hpp"
-#include <math.h>
-#include <memory>
 
-void copy(const turtlesim::srv::Spawn::Request::SharedPtr req, turtlesim::srv::Spawn::Response::SharedPtr res)
+using std::placeholders::_1;
+using std::placeholders::_2;
+
+class MinimalServer : public rclcpp::Node
 {
-  float a = sqrt(pow((req->x),2) + pow((req->y),2));
-  float b = atan((req->y)/(req->x))*180/M_PI;
-  res->name = req->name;
-  RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "Response - Polar Radial Coordinate : '%f', Polar Angular Coordinate : '%f'", a, b);
-}
+  public:
+    MinimalServer()
+    : Node("cpp_ser_ploar_node")
+    {
+      server_ = this->create_service<turtlesim::srv::Spawn>("polar_coordinate", std::bind(&MinimalServer::send_response_message, this, _1, _2));
+    }
 
-int main(int argc, char **argv)
+  private:
+    void send_response_message(const turtlesim::srv::Spawn::Request::SharedPtr request_message, turtlesim::srv::Spawn::Response::SharedPtr response_message)
+    {
+        float a = sqrt(pow((request_message->x),2) + pow((request_message->y),2));
+        float b = atan((request_message->y)/(request_message->x))*180/M_PI;
+        response_message->name = request_message->name;
+        RCLCPP_INFO(this->get_logger(), "Response - Polar Radial Coordinate : '%f', Polar Angular Coordinate : '%f'", a, b);
+    }
+    rclcpp::Service<turtlesim::srv::Spawn>::SharedPtr server_;
+};
+
+int main(int argc, char * argv[])
 {
   rclcpp::init(argc, argv);
-  auto node = rclcpp::Node::make_shared("cpp_ser_polar_node");
-  auto service = node->create_service<turtlesim::srv::Spawn>("polar_coordinate", &copy);
-  rclcpp::spin(node);
+  rclcpp::spin(std::make_shared<MinimalServer>());
   rclcpp::shutdown();
+  return 0;
 }
+
 

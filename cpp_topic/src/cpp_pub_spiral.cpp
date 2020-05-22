@@ -13,18 +13,18 @@ class MinimalPublisher : public rclcpp::Node
     {
       publisher_ = this->create_publisher<geometry_msgs::msg::Twist>("turtle1/cmd_vel", 1);
       i = 0.0;
-      timer_ = this->create_wall_timer(500ms, std::bind(&MinimalPublisher::timer_callback, this));
+      timer_ = this->create_wall_timer(500ms, std::bind(&MinimalPublisher::publish_message, this));
     }
 
   private:
-    void timer_callback()
+    void publish_message()
     {
       auto message = geometry_msgs::msg::Twist();
-      message.linear.x = 4.0; //atof(argv[1]);
+      message.linear.x = 4.0; 
       message.angular.z = 2.0 + i;
       RCLCPP_INFO(this->get_logger(), "Sending - Linear Velocity : '%f', Angular Velocity : '%f'", message.linear.x, message.angular.z);
       publisher_->publish(message);
-      i += 0.1; //atof(argv[3]);
+      i += 0.1; 
     }
     rclcpp::TimerBase::SharedPtr timer_;
     rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr publisher_;

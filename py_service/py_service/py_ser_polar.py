@@ -1,25 +1,25 @@
-from turtlesim.srv import Spawn
 from math import *
 import rclpy
 from rclpy.node import Node
+from turtlesim.srv import Spawn
 
-class MinimalService(Node):
+class MinimalServer(Node):
 
     def __init__(self):
         super().__init__('py_ser_ploar_node')
-        self.srv = self.create_service(Spawn, 'polar_coordinate', self.add_two_ints_callback)
+        self.server_ = self.create_service(Spawn, 'polar_coordinate', self.send_response_message)
 
-    def add_two_ints_callback(self, request, response):
-        a = sqrt(pow(request.x,2)+pow(request.y,2))
-        b = degrees(atan(request.y/request.x))
-        response.name = request.name
+    def send_response_message(self, request_message, response_message):
+        a = sqrt(pow(request_message.x,2)+pow(request_message.y,2))
+        b = degrees(atan(request_message.y/request_message.x))
+        response_message.name = request_message.name
         self.get_logger().info('Response - Polar Radial Coordinate : %f, Polar Angular Coordinate : %f' % (a, b))
-        return response
+        return response_message
 
 def main(args=None):
     rclpy.init(args=args)
-    minimal_service = MinimalService()
-    rclpy.spin(minimal_service)
+    minimal_server = MinimalServer()
+    rclpy.spin(minimal_server)
     rclpy.shutdown()
 
 if __name__ == '__main__':
