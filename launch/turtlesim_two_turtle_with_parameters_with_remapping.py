@@ -5,15 +5,15 @@ def generate_launch_description():
     return LaunchDescription([
         Node(
             package='turtlesim',
-            node_namespace='turtlesim1',
-            node_executable='turtlesim_node',
-            node_name='node1'
+            namespace='turtlesim1',
+            executable='turtlesim_node',
+            name='node1'
         ),
         Node(
             package='turtlesim',
-            node_namespace='turtlesim2',
-            node_executable='turtlesim_node',
-            node_name='node2',
+            namespace='turtlesim2',
+            executable='turtlesim_node',
+            name='node2',
             parameters=[
                       {"background_r": 0},
                       {"background_g": 0},
@@ -22,8 +22,8 @@ def generate_launch_description():
         ),
         Node(
             package='turtlesim',
-            node_executable='mimic',
-            node_name='mimic',
+            executable='mimic',
+            name='mimic',
             remappings=[
                 ('/input/pose', '/turtlesim1/turtle1/pose'),
                 ('/output/cmd_vel', '/turtlesim2/turtle1/cmd_vel'),
