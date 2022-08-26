@@ -10,7 +10,7 @@ class MinimalServer : public rclcpp::Node
 {
   public:
     MinimalServer()
-    : Node("cpp_ser_ploar_node")
+    : Node("cpp_ser_polar_node")
     {
       server_ = this->create_service<turtlesim::srv::Spawn>("polar_coordinate", std::bind(&MinimalServer::send_response_message, this, _1, _2));
     }
