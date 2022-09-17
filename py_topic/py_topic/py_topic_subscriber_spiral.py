@@ -5,7 +5,7 @@ from geometry_msgs.msg import Twist
 class MinimalSubscriber(Node):
 
     def __init__(self):
-        super().__init__('py_sub_spiral_node')
+        super().__init__('py_topic_subscriber_spiral')
         self.subscriber_ = self.create_subscription(Twist, 'turtle1/cmd_vel', self.subscribe_message, 1)
         self.subscriber_  # prevent unused variable warning
 

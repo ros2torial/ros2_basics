@@ -6,7 +6,7 @@ from turtlesim.srv import Spawn
 class MinimalServer(Node):
 
     def __init__(self):
-        super().__init__('py_ser_ploar_node')
+        super().__init__('py_service_server_polar')
         self.server_ = self.create_service(Spawn, 'polar_coordinate', self.send_response_message)
 
     def send_response_message(self, request_message, response_message):

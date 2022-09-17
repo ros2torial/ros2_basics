@@ -19,8 +19,9 @@ setup(
     license='TODO: License declaration',
     tests_require=['pytest'],
     entry_points={
-        'console_scripts': [ 'py_pub_spiral = py_topic.py_pub_spiral:main',
-                             'py_sub_spiral = py_topic.py_sub_spiral:main',
+        'console_scripts': [ 'py_topic_publisher_spiral = py_topic.py_topic_publisher_spiral:main',
+                             'py_topic_subscriber_spiral = py_topic.py_topic_subscriber_spiral:main',
         ],
     },
 )
+

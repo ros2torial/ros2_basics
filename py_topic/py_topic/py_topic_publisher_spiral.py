@@ -6,7 +6,7 @@ from geometry_msgs.msg import Twist
 class MinimalPublisher(Node):
 
     def __init__(self):
-        super().__init__('py_pub_spiral_node')
+        super().__init__('py_topic_publisher_spiral')
         self.publisher_ = self.create_publisher(Twist, 'turtle1/cmd_vel', 1)
         timer_period = 0.5  # seconds
         self.i = 0.0
@@ -29,3 +29,4 @@ def main(args=None):
 
 if __name__ == '__main__':
     main()
+

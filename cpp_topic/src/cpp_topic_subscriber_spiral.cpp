@@ -8,7 +8,7 @@ class MinimalSubscriber : public rclcpp::Node
 {
   public:
     MinimalSubscriber()
-    : Node("cpp_sub_spiral_node")
+    : Node("cpp_topic_subscriber_spiral")
     {
       subscriber_ = this->create_subscription<geometry_msgs::msg::Twist>("turtle1/cmd_vel", 1, std::bind(&MinimalSubscriber::subscribe_message, this, _1));
     }
@@ -28,3 +28,4 @@ int main(int argc, char * argv[])
   rclcpp::shutdown();
   return 0;
 }
+

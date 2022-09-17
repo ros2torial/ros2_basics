@@ -1,5 +1,6 @@
 #include "rclcpp/rclcpp.hpp"
 #include "turtlesim/srv/spawn.hpp"
+#include <string>
 #include <chrono>
 #include <cstdlib>
 #include <memory>
@@ -9,12 +10,16 @@ using namespace std::chrono_literals;
 int main(int argc, char **argv)
 {
   rclcpp::init(argc, argv);
-  auto node = rclcpp::Node::make_shared("cpp_cli_polar_node");
+  if(argc != 4){
+    RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "incorrect argument");
+    return 1;
+  }
+  auto node = rclcpp::Node::make_shared("cpp_service_client_polar");
   auto client = node->create_client<turtlesim::srv::Spawn>("polar_coordinate");
   auto request = std::make_shared<turtlesim::srv::Spawn::Request>();
-  request->x = 5.0;
-  request->y = 5.0;
-  request->theta = 0.0;
+  request->x = std::stof(argv[1]);
+  request->y = std::stof(argv[2]);
+  request->theta = std::stof(argv[3]);
 
   while (!client->wait_for_service(1s)) {
     if (!rclcpp::ok()) {
@@ -28,7 +33,7 @@ int main(int argc, char **argv)
   auto result = client->async_send_request(request);
   // Wait for the result.
   if (rclcpp::spin_until_future_complete(node, result) ==
-    rclcpp::executor::FutureReturnCode::SUCCESS)
+    rclcpp::FutureReturnCode::SUCCESS)
   {
     RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "Success");
   } else {

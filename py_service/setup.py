@@ -19,7 +19,7 @@ setup(
     license='TODO: License declaration',
     tests_require=['pytest'],
     entry_points={
-        'console_scripts': ['py_ser_polar = py_service.py_ser_polar:main',  'py_cli_polar = py_service.py_cli_polar:main',
+        'console_scripts': ['py_service_server_polar = py_service.py_service_server_polar:main',  'py_service_client_polar = py_service.py_service_client_polar:main',
         ],
     },
 )

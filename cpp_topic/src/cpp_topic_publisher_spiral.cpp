@@ -9,7 +9,7 @@ class MinimalPublisher : public rclcpp::Node
 {
   public:
     MinimalPublisher()
-    : Node("cpp_pub_spiral_node")
+    : Node("cpp_topic_publisher_spiral")
     {
       publisher_ = this->create_publisher<geometry_msgs::msg::Twist>("turtle1/cmd_vel", 1);
       i = 0.0;

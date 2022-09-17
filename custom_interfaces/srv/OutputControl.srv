@@ -1,0 +1,5 @@
+uint8 output_number # which output value to set (it can set upto 256 output)
+bool value # e.g. for setting it high / low
+---
+bool success   # indicate successful run of triggered service
+string message # informational, e.g. for error messages
